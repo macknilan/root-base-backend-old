@@ -23,9 +23,9 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     # path(settings.ADMIN_URL, admin.site.urls),
     path('admin/', admin.site.urls),
-    
+
     # path(settings.ADMIN_URL, admin.site.urls),
-] # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
