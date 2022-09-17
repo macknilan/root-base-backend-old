@@ -38,7 +38,7 @@
                             </svg>
                         </button>
                         <ul id="dropdown-vision"
-                            class="space-y-2 py-2 {% comment %} {% if request.path != '/document' and request.path != '/expense' and request.path != '/identity' %} hidden {% endif %} {% endcomment %}">
+                            class="space-y-2 py-2 hidden {% comment %} {% if request.path != '/document' and request.path != '/expense' and request.path != '/identity' %} hidden {% endif %} {% endcomment %}">
                             <li>
                                 <a href="{% comment %} {% url 'document' %} {% endcomment %}"
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% comment %} {% if request.path == '/document' %} bg-gray-100 dark:bg-gray-700 {% endif %} {% endcomment %}">Document</a>
@@ -73,7 +73,7 @@
                             </svg>
                         </button>
                         <ul id="dropdown-data"
-                            class="space-y-2 py-2 {% comment %} {% if request.path != '/upload' and request.path != '/mapping' and request.path != '/setup' and request.path != '/export' %} hidden {% endif %} {% endcomment %}">
+                            class="space-y-2 py-2 hidden {% comment %} {% if request.path != '/upload' and request.path != '/mapping' and request.path != '/setup' and request.path != '/export' %} hidden {% endif %} {% endcomment %}">
                             <li>
                                 <a href="{% comment %} {% url 'upload' %} {% endcomment %}"
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% comment %} {% if request.path == '/upload' %} bg-gray-100 dark:bg-gray-700 {% endif %} {% endcomment %}">Upload</a>
@@ -110,7 +110,7 @@
                             </svg>
                         </button>
                         <ul id="dropdown-training"
-                            class="space-y-2 py-2 {% comment %} {% if request.path != '/training' and request.path != '/evaluation' and request.path != '/summary' %} hidden {% endif %} {% endcomment %}">
+                            class="space-y-2 py-2 hidden {% comment %} {% if request.path != '/training' and request.path != '/evaluation' and request.path != '/summary' %} hidden {% endif %} {% endcomment %}">
                             <li>
                                 <a href="{% comment %} {% url 'training' %} {% endcomment %}"
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% comment %} {% if request.path == '/training' %} bg-gray-100 dark:bg-gray-700 {% endif %} {% endcomment %}">Training</a>
@@ -145,7 +145,7 @@
                             </svg>
                         </button>
                         <ul id="dropdown-auth"
-                            class="space-y-2 py-2 {% comment %} {% if request.path != '/passwordreset' and request.path != '/profilelock' %} hidden {% endif %} {% endcomment %}">
+                            class="space-y-2 py-2 hidden {% comment %} {% if request.path != '/passwordreset' and request.path != '/profilelock' %} hidden {% endif %} {% endcomment %}">
                             <li>
                                 <a href="{% comment %} {% url 'passwordreset' %} {% endcomment %}"
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% comment %} {% if request.path == '/passwordreset' %} bg-gray-100 dark:bg-gray-700 {% endif %} {% endcomment %}">Reset Password</a>
