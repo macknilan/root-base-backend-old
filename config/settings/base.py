@@ -245,6 +245,15 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["console"]},
 }
 
+# django-compressor
+# ------------------------------------------------------------------------------
+# https://django-compressor.readthedocs.io/en/latest/quickstart/#installation
+INSTALLED_APPS += ["compressor"]
+STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
+# COMPRESS_ROOT = [str(APPS_DIR / "static")]
+COMPRESS_ENABLED = True
+
+
 
 # My other stuff...
 # ------------------------------------------------------------------------------
