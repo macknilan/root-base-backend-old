@@ -19,12 +19,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
+from allauth.account.views import LoginView
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
-    # path(settings.ADMIN_URL, admin.site.urls),
-    path('admin/', admin.site.urls),
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path("", LoginView.as_view(), name="home"),
+    # path('admin/', admin.site.urls),
+    path(settings.ADMIN_URL, admin.site.urls),
+    path("users/", include("core_template.users.urls", namespace="users")),
+    path("accounts/", include("allauth.urls")),
 
     # path(settings.ADMIN_URL, admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

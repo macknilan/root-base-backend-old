@@ -1,55 +1,54 @@
-    {% load static i18n compress%}
+{% load static i18n compress %}
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>{% block title %}core template{% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="dummy cookiecutter" />
+        <meta name="author" content="Rodolfo" />
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>{% block title %}core template{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="dummy cookiecutter" />
-    <meta name="author" content="Rodolfo" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Roboto+Slab&family=Rubik:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&family=Roboto+Slab&family=Rubik:ital@0;1&display=swap" rel="stylesheet">
+        <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}" />
 
-    <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}" />
+        {% block css %} {% compress css %}
+        <link href="{% static 'src/output.css' %}" rel="stylesheet" />
+        {% endcompress %} {% endblock %} {% block javascript %}
+        <!-- {# Placed at the top of the document so pages load faster with defer #} -->
+        <script defer src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js" crossorigin="anonymous"></script>
+        <!-- My stuff: Third-party javascript libraries go here -->
 
-    {% block css %} {% compress css %}
-    <link href="{% static 'src/output.css' %}" rel="stylesheet" />
-    {% endcompress %} {% endblock %} {% block javascript %}
-    <!-- {# Placed at the top of the document so pages load faster with defer #} -->
-    <script defer src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js" crossorigin="anonymous"></script>
-    <!-- My stuff: Third-party javascript libraries go here -->
+        <!-- place project specific Javascript in this file -->
+        <script defer src="{% static "js/sidebar.js" %}"></script>
+        {% endblock javascript %}
+    </head>
 
-    <!-- place project specific Javascript in this file -->
-    <script defer src="{% static "js/sidebar.js" %}"></script>
-    {% endblock javascript %}
-</head>
+    <body class="bg-green-50">
+        {% if user.is_authenticated %}
+            {% include "navbar.html" %}
+        {% endif %}
 
-<body class="bg-green-50">
-
-    {% include "navbar.html" %}
-
-    <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
-        {% include "sidebar.html" %}
-        <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
-            <main>
-                {% block content %}
-                {% endblock content %}
-            </main>
-            {% include 'footer.html' %}
+        <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+            {% if user.is_authenticated %}
+                {% include "sidebar.html" %}
+                <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+            {% else %}
+                <div id="main-content" class="relative w-screen bg-gray-50 dark:bg-gray-900">
+            {% endif %}
+                <main>
+                    {% block content %}
+                    {% endblock content %}
+                </main>
+                {% if user.is_authenticated %}
+                    {% include "footer.html" %}
+                {% endif %}
+            </div>
         </div>
-    </div>
-
-
-    {% comment %} <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script> {% endcomment %}
-
-</body>
-
+        {% comment %} <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script> {% endcomment %}
+    </body>
 </html>
-
-
-

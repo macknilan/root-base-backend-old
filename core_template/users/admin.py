@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-# from root.users.forms import UserChangeForm, UserCreationForm
+from core_template.users.forms import UserAdminChangeForm, UserAdminCreationForm
 
 # Models
 from core_template.users.models import User, Profile
@@ -14,9 +14,10 @@ from core_template.users.models import User, Profile
 User = get_user_model()
 
 
+@admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
-    # form = UserChangeForm
-    # add_form = UserCreationForm
+    form = UserAdminChangeForm
+    add_form = UserAdminCreationForm
     # fieldsets = (("User", {"fields": ("name",)}),) + auth_admin.UserAdmin.fieldsets
 
     fieldsets = (
@@ -52,6 +53,3 @@ class UserProfile(admin.ModelAdmin):
         "user__first_name",
         "user__last_name",
     )
-
-
-admin.site.register(User, UserAdmin)

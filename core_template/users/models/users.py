@@ -1,12 +1,15 @@
 """User model."""
 
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator
 
 # Utilities
 from core_template.utils.models import TimeStampedModel
+
+
 
 
 class User(TimeStampedModel, AbstractUser):
@@ -29,12 +32,13 @@ class User(TimeStampedModel, AbstractUser):
     )
 
     phone_regex = RegexValidator(
-        regex=r"^\+?1?\d{9,15}$",
+        regex=r'^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$',
         message=_(
-            "Phone number must be entered in the format: +999999999. Up to 15 digits allowed."
+            "Phone number must be entered in the format: +00 (000) 000-0000"
         ),
     )
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+
+    phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True)
 
     # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#django.contrib.auth.models.CustomUser.USERNAME_FIELD
     USERNAME_FIELD = "email"
@@ -70,3 +74,12 @@ class User(TimeStampedModel, AbstractUser):
     def get_short_name(self):
         """Function is overwritten and return username. Instead of first_name"""
         return self.username
+
+    def get_absolute_url(self):
+        """Get url for user's detail view.
+
+        Returns:
+            str: URL for user detail.
+
+        """
+        return reverse("users:detail", kwargs={"username": self.username})
