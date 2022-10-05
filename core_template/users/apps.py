@@ -8,4 +8,7 @@ class UsersConfig(AppConfig):
     verbose_name: _("Users")
 
     def ready(self) -> None:
+        """
+        Function for user model and profile signals.
+        """
         from . import signals

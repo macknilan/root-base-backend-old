@@ -1,3 +1,9 @@
+"""
+Local settings to build other settings files upon.
+
+https://docs.djangoproject.com/en/4.1/topics/settings/
+https://docs.djangoproject.com/en/4.1/ref/settings/
+"""
 from .base import *  # noqa
 from .base import env
 

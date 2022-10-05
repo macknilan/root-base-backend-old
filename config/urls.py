@@ -24,7 +24,6 @@ from allauth.account.views import LoginView
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path("", LoginView.as_view(), name="home"),
-    # path('admin/', admin.site.urls),
     path(settings.ADMIN_URL, admin.site.urls),
     path("users/", include("core_template.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),

@@ -44,10 +44,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
 LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 
-# DATABASES# ------------------------------------------------------------------------------
+# DATABASES
+# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # DATABASES = {"default": env.db("DATABASE_URL")}
 # DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -85,11 +87,16 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "rest_framework",
+    "django_filters",
+    "django_countries",
+    "phonenumber_field",
+    "drf_yasg",
+    "corsheaders"
 ]
 
 LOCAL_APPS = [
     # My custom apps
-    # "core_template.users.apps.UsersConfig",
     "core_template.users"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -145,11 +152,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -251,7 +260,7 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s "
+            "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s "
             "%(process)d %(thread)d %(message)s"
         }
     },
@@ -299,7 +308,9 @@ COMPRESS_ENABLED = True
 # My other stuff...
 # ------------------------------------------------------------------------------
 
-
+# Cors configuration
+# ------------------------------------------------------------------------------
+CORS_URLS_REGEX = r"^/api/.*$"
 
 
 
