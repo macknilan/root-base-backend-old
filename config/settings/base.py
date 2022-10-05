@@ -12,8 +12,8 @@ import environ
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-# core_template/
-APPS_DIR = ROOT_DIR / "core_template"
+# root-base-backend/
+APPS_DIR = ROOT_DIR / "apps"
 env = environ.Env()
 
 # READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -97,7 +97,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     # My custom apps
-    "core_template.users"
+    "apps.users"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -106,7 +106,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
 # FALTA INVESTIGAR POR QUE NO FUNCIONA ACTIVADO 👇
-# MIGRATION_MODULES = {"sites": "core_template.contrib.sites.migrations"}
+# MIGRATION_MODULES = {"sites": "root-base-backend.contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "core_template.users.context_processors.allauth_settings",
+                "apps.users.context_processors.allauth_settings",
             ],
         },
     }
@@ -286,14 +286,14 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_SESSION_REMEMBER = None
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_ADAPTER = "core_template.users.adapters.AccountAdapter"
-SOCIALACCOUNT_ADAPTER = "core_template.users.adapters.SocialAccountAdapter"
+ACCOUNT_ADAPTER = "apps.users.adapters.AccountAdapter"
+SOCIALACCOUNT_ADAPTER = "apps.users.adapters.SocialAccountAdapter"
 
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-ACCOUNT_FORMS = {"signup": "core_template.users.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "apps.users.forms.UserSignupForm"}
 
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-SOCIALACCOUNT_FORMS = {"signup": "core_template.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "apps.users.forms.UserSocialSignupForm"}
 
 # django-compressor
 # ------------------------------------------------------------------------------

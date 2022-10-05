@@ -18,9 +18,9 @@ def main():
     execute_from_command_line(sys.argv)
 
     # This allows easy placement of apps within the interior
-    # core_template directory.
+    # apps directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / "core_template"))
+    sys.path.append(str(current_path / "apps"))
 
 
 if __name__ == '__main__':

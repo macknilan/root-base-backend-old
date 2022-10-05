@@ -1,5 +1,5 @@
 {
-  "name": "core_template",
+  "name": "root-base-backend",
   "version": "1.0.0",
   "description": "",
   "main": "tailwind.config.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/macknilan/core_template.git"
+    "url": "git+https://github.com/macknilan/root-base-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/macknilan/core_template/issues"
+    "url": "https://github.com/macknilan/root-base-backend/issues"
   },
-  "homepage": "https://github.com/macknilan/core_template#readme",
+  "homepage": "https://github.com/macknilan/root-base-backend#readme",
   "devDependencies": {
     "tailwindcss": "^3.1.8"
   },

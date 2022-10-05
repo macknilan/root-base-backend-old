@@ -1,4 +1,4 @@
-"""core_template URL Configuration
+"""root-base-backend URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -25,7 +25,7 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path("", LoginView.as_view(), name="home"),
     path(settings.ADMIN_URL, admin.site.urls),
-    path("users/", include("core_template.users.urls", namespace="users")),
+    path("users/", include("apps.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
 
     # path(settings.ADMIN_URL, admin.site.urls),

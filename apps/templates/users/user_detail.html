@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    User: {{ object.username }}
+{% endblock title %}
+
+{% block content %}
+    <section class="bg-gray-50 dark:bg-gray-900">
+        <div class="h-screen px-4 pt-6">
+            <div class="p-4 bg-white rounded-lg shadow sm:p-6 xl:p-8 dark:bg-gray-800">
+                <div class="my-1 text-lg text-center">{% translate "User" %}</div>
+                <div class="flex flex-col md:justify-evenly md:flex-row">
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "Email:" %}</div>
+                        <div class="mx-1">{{ object.email }}</div>
+                    </div>
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "User Name:" %}</div>
+                        <div class="mx-1">{{ object.username }}</div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:justify-evenly md:flex-row">
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "First Name:" %}</div>
+                        <div class="mx-1">{{ object.first_name }}</div>
+                    </div>
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">Last Name:</div>
+                        <div class="mx-1">{{ object.last_name }}</div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:justify-evenly md:flex-row">
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "Phone Number:" %}</div>
+                        <div class="mx-1">{{ object.phone_number }}</div>
+                    </div>
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "Is Staff: " %}</div>
+                        <div class="mx-1">
+                            {% if object.is_staff %}
+                                <input checked
+                                       id="checked-checkbox"
+                                       type="checkbox"
+                                       value="{{ object.is_staff }}"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       disabled>
+                            {% else %}
+                                <input id="checked-checkbox"
+                                       type="checkbox"
+                                       value=""
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       disabled>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:justify-evenly md:flex-row">
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "Is Active:" %}</div>
+                        <div class="mx-1">
+                            {% if object.is_active %}
+                                <input checked
+                                       id="checked-checkbox"
+                                       type="checkbox"
+                                       value="{{ object.is_active }}"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       disabled>
+                            {% else %}
+                                <input id="checked-checkbox"
+                                       type="checkbox"
+                                       value=""
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       disabled>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "Is Super User:" %}</div>
+                        <div class="mx-1">
+                            {% if object.is_superuser %}
+                                <input checked
+                                       id="checked-checkbox"
+                                       type="checkbox"
+                                       value="{{ object.is_superuser }}"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       disabled>
+                            {% else %}
+                                <input id="checked-checkbox"
+                                       type="checkbox"
+                                       value=""
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       disabled>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:justify-evenly md:flex-row">
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "Numero ID:" %}</div>
+                        <div class="mx-1">{{ object.id }}</div>
+                    </div>
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "My Bio:" %}</div>
+                        <div class="mx-1">{{ object.profile.biography }}</div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:justify-evenly md:flex-row">
+                    <div class="flex justify-between mx-3 my-3 md:container">
+                        <div class="mx-1 font-bold">{% translate "My Picture:" %}</div>
+                        {% if object.profile.picture %}
+                            <div class="mx-1">
+                                <img class="h-auto max-w-xs mx-auto rounded-md"
+                                     src="{{ object.profile.picture.url }}"
+                                     alt="User Image"
+                                     title="User Image">
+                            </div>
+                        {% else %}
+                            <div class="mx-1">No Image</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="my-3">
+                    {% if object == request.user %}
+                        <!-- Action buttons -->
+                        <a href="{% url 'users:update' %}"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            {% translate "My Info" %}
+                        </a>
+                        <a href="{% url "account_email" %}"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            {% translate "E-Mail" %}
+                        </a>
+                        <a href="{% url "users:update_profile" %}"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            {% translate "My Profile" %}
+                        </a>
+                        <!-- End Action buttons -->
+                    {% else %}
+                        <!-- Action buttons -->
+                        <a href="#"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            {% translate "My Info" %}
+                        </a>
+                        <a href="#"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            {% translate "E-Mail" %}
+                        </a>
+                        <a href="#"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            {% translate "My Profile" %}
+                        </a>
+                        <!-- End Action buttons -->
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
