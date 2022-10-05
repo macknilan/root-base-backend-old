@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    User: {{ object.username }}
+{% endblock title %}
+
+{% block content %}
+    <section class="bg-gray-50 dark:bg-gray-900">
+        <div class="h-screen px-4 pt-6">
+            <div class="p-4 bg-white rounded-lg shadow sm:p-6 xl:p-8 dark:bg-gray-800">
+                <div class="my-1 text-lg text-center">{% translate "User" %}</div>
+                <form method="post"
+                      action="{% url "users:update_profile" %}"
+                      enctype="multipart/form-data">
+                    <div class="grid gap-6 mb-6 md:grid-cols-2">
+                        {% csrf_token %}
+                        {% comment %} <!-- {% crispy form %} --> {% endcomment %}
+                        {{ form|crispy }}
+                        {% comment %} <div class="flex flex-col md:justify-evenly md:flex-row">
+                            <div class="flex justify-between mx-3 my-3 md:container">
+                                <div class="mx-1 font-bold">{% translate "Biographt:" %}</div>
+                                <div class="mx-1">{{ object.biography }}</div>
+                            </div>
+                            <div class="flex justify-between mx-3 my-3 md:container">
+                                <div class="mx-1 font-bold">{% translate "User Name:" %}</div>
+                                <div class="mx-1">{{ object.username }}</div>
+                            </div>
+                        </div> {% endcomment %}
+                        {% comment %} <div class="my-3">
+                            {% if object == request.user %}
+                                <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    {% translate "My Info" %}
+                                </a>
+                            {% endif %}
+                        </div> {% endcomment %}
+                    </div>
+                    <button type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        {% translate "Update" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

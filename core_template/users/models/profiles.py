@@ -3,6 +3,7 @@
 # Django
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from traitlets import default
 
 # Utilities
 from core_template.utils.models import TimeStampedModel
@@ -18,13 +19,18 @@ class Profile(TimeStampedModel):
     user = models.OneToOneField("users.User", on_delete=models.CASCADE)
 
     picture = models.ImageField(
-        _("profile picture"), upload_to="users/pictures/", blank=True, null=True
+        _("profile picture"),
+        # default="Add image url which is you want ...",
+        blank=True,
+        max_length=100,
+        null=True,
+        upload_to="users_pictures/"
     )
     biography = models.TextField(
         _("About your profile"),
-        max_length=500,
-        blank=True,
+        default="Update your bio ...",
         help_text=_("A small biography about the user"),
+        max_length=500,
     )
 
     def __str__(self):

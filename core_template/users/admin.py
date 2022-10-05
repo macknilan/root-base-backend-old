@@ -39,17 +39,27 @@ class UserAdmin(auth_admin.UserAdmin):
 class UserProfile(admin.ModelAdmin):
     """Profile model admin"""
 
-    def picture_tag(self, obj):
-        return format_html(
-            '<img src="{}" style="max-width:150px; max-height:150px"/>'.format(
-                obj.picture.url
-            )
-        )
+    # def picture_tag(self, obj):
+    #     return format_html(
+    #         '<img src="{}" style="max-width:150px; max-height:150px"/>'.format(
+    #             obj.picture.url
+    #         )
+    #     )
 
-    list_display = ("user", "biography", "picture_tag")
+    list_display = ("user", "biography", "picture")
     search_fields = (
         "user__username",
         "user__email",
         "user__first_name",
         "user__last_name",
     )
+
+    fieldsets = [
+        ('Profile', {
+            'fields': (('user', 'picture'),),
+        }),
+        ('Metadata', {
+            'fields': (('created', 'modified'),),
+        })
+    ]
+    readonly_fields = ('created', 'modified',)

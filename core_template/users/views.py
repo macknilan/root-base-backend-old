@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, RedirectView, UpdateView
+from django.views.generic import DetailView, RedirectView, UpdateView, CreateView
 
 from core_template.users.models import Profile
 User = get_user_model()
@@ -23,6 +23,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         user = self.get_object()
         context['profile'] = Profile.objects.filter(user=user)
+        # print("BREAKPOINT")
         return context
 
 
@@ -30,6 +31,7 @@ user_detail_view = UserDetailView.as_view()
 
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """Update user view."""
 
     model = User
     # form_class: UserUpdateForm
@@ -71,7 +73,7 @@ user_update_view = UserUpdateView.as_view()
 
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
-
+    """Redirect view."""
     permanent = False
 
     def get_redirect_url(self):
@@ -79,3 +81,30 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 user_redirect_view = UserRedirectView.as_view()
+
+
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    """Update profile view."""
+
+    template_name = "users/user_update_profile.html"
+    model = Profile
+    fields = ["biography","picture"]
+    success_message = _("Profile successfully updated")
+
+    def get_form(self, *args, **kwargs):
+        form = super(UpdateProfileView, self).get_form(*args, **kwargs)
+        form.fields["biography"].widget.attrs.update(
+            {"placeholder": "change you bio..", "maxlength": 500, "required": True}
+        )
+        return form
+
+    def get_object(self):
+        """Return user's profile."""
+        return self.request.user.profile
+
+    def get_success_url(self):
+        """Return to user's profile."""
+        username = self.object.user.username
+        return reverse('users:detail', kwargs={'username': username})
+
+user_update_profile_view = UpdateProfileView.as_view()

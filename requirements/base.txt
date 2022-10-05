@@ -22,6 +22,7 @@ django-compressor==4.1  # https://github.com/django-compressor/django-compressor
 # django-redis==5.2.0  # https://github.com/jazzband/django-redis
 
 # CHECK OUT THESE EXTRA LIBRARIES
+# ------------------------------------------------------------------------------
 django-autoslug==1.9.8  # https://github.com/justinmayer/django-autoslug
 django-countries==7.3.1  #  https://github.com/SmileyChris/django-countries
 django-phonenumber-field==7.0.0  # https://github.com/stefanfoulis/django-phonenumber-field
