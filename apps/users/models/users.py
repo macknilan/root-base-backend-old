@@ -30,10 +30,8 @@ class User(TimeStampedModel, AbstractUser):
     )
 
     phone_regex = RegexValidator(
-        regex=r'^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$',
-        message=_(
-            "Phone number must be entered in the format: +00 (000) 000-0000"
-        ),
+        regex=r"^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$",
+        message=_("Phone number must be entered in the format: +00 (000) 000-0000"),
     )
 
     phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True)

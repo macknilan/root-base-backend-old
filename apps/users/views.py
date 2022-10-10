@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView, CreateView
 
 from apps.users.models import Profile
+
 User = get_user_model()
 
 
@@ -13,16 +14,16 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     """User detail view."""
 
     template_name = "users/user_detail.html"
-    slug_field = 'username'
-    slug_url_kwarg = 'username'
+    slug_field = "username"
+    slug_url_kwarg = "username"
     queryset = User.objects.all()
-    context_object_name = 'user'
+    context_object_name = "user"
 
     def get_context_data(self, **kwargs):
         """Add user's profile to context."""
         context = super().get_context_data(**kwargs)
         user = self.get_object()
-        context['profile'] = Profile.objects.filter(user=user)
+        context["profile"] = Profile.objects.filter(user=user)
         # print("BREAKPOINT")
         return context
 
@@ -74,6 +75,7 @@ user_update_view = UserUpdateView.as_view()
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     """Redirect view."""
+
     permanent = False
 
     def get_redirect_url(self):
@@ -88,7 +90,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
 
     template_name = "users/user_update_profile.html"
     model = Profile
-    fields = ["biography","picture"]
+    fields = ["biography", "picture"]
     success_message = _("Profile successfully updated")
 
     def get_form(self, *args, **kwargs):
@@ -105,6 +107,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         """Return to user's profile."""
         username = self.object.user.username
-        return reverse('users:detail', kwargs={'username': username})
+        return reverse("users:detail", kwargs={"username": username})
+
 
 user_update_profile_view = UpdateProfileView.as_view()

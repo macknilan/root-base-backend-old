@@ -11,4 +11,8 @@ class UsersConfig(AppConfig):
         """
         Function for user model and profile signals.
         """
-        from . import signals
+        try:
+            # from . import signals
+            import apps.users.signals
+        except ImportError:
+            pass

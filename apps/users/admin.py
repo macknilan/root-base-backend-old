@@ -11,7 +11,7 @@ from apps.users.forms import UserAdminChangeForm, UserAdminCreationForm
 # Models
 from apps.users.models import User, Profile
 
-User = get_user_model()
+# User = get_user_model()
 
 
 @admin.register(User)
@@ -55,11 +55,23 @@ class UserProfile(admin.ModelAdmin):
     )
 
     fieldsets = [
-        ('Profile', {
-            'fields': (('user', 'picture'),),
-        }),
-        ('Metadata', {
-            'fields': (('created', 'modified'),),
-        })
+        (
+            "Profile",
+            {
+                "fields": (("user", "picture"),),
+            },
+        ),
+        (
+            "Metadata",
+            {
+                "fields": (("created", "modified"),),
+            },
+        ),
     ]
-    readonly_fields = ('created', 'modified',)
+    readonly_fields = (
+        "created",
+        "modified",
+    )
+
+
+# admin.site.register(User, UserAdmin)

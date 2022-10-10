@@ -24,7 +24,7 @@ class Profile(TimeStampedModel):
         blank=True,
         max_length=100,
         null=True,
-        upload_to="users_pictures/"
+        upload_to="users_pictures/",
     )
     biography = models.TextField(
         _("About your profile"),

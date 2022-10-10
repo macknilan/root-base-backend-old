@@ -1,4 +1,3 @@
-
 from django import forms
 from dataclasses import fields
 from allauth.account.forms import SignupForm
