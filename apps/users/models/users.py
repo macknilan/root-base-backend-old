@@ -26,6 +26,7 @@ class User(TimeStampedModel, AbstractUser):
     email = models.EmailField(
         _("email address"),
         unique=True,
+        db_index=True,
         error_messages={"unique": _("A user with that email already exists.")},
     )
 
@@ -62,14 +63,10 @@ class User(TimeStampedModel, AbstractUser):
         ),
     )
 
-    def __str__(self):
-        """Return username."""
-        return self.username
+    class Meta:
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
 
-    # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#django.contrib.auth.models.CustomUser.get_short_name
-    def get_short_name(self):
-        """Function is overwritten and return username. Instead of first_name"""
-        return self.username
 
     def get_absolute_url(self):
         """Get url for user's detail view.
@@ -79,3 +76,19 @@ class User(TimeStampedModel, AbstractUser):
 
         """
         return reverse("users:detail", kwargs={"username": self.username})
+
+    def __str__(self):
+        """Return username."""
+        return self.username
+
+    # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#django.contrib.auth.models.CustomUser.get_short_name
+    def get_short_name(self):
+        """Function is overwritten and return username. Instead of first_name"""
+        return self.username
+
+    @property
+    def get_full_name(self):
+        """Property for return full name."""
+        return f"{self.first_name.title()} {self.last_name.title()}"
+
+
