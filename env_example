@@ -1,0 +1,3 @@
+# django-allauth[ENVS-PRODUCTION]
+# ------------------------------------------------------------------------------
+# DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
