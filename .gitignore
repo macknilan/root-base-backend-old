@@ -325,8 +325,10 @@ Session.vim
 tags
 
 ### Project template
-root-base-backend/apps/media/
-root-base-backend/media/
+# root-base-backend/apps/media/
+# root-base-backend/media/
+apps/media/
+media/
 
 .pytest_cache/
 .ipython/
