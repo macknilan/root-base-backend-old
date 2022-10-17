@@ -20,10 +20,27 @@ from django.urls import path, include
 from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
 from allauth.account.views import LoginView
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Name API",
+        default_version="v1",
+        description="API endpoints for the api",
+        contact=openapi.Contact(email="nomackayu@gmail.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path("", LoginView.as_view(), name="home"),
+    path("redoc/",schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path(settings.ADMIN_URL, admin.site.urls),
     path("users/", include("apps.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
@@ -55,3 +72,7 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
+admin.site.site_header = "Authors API Admin"
+admin.site.site_title = "Authors API Admin Portal"
+admin.site.index_title = "Welcome to the API Portal"
