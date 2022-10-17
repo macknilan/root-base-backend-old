@@ -325,6 +325,7 @@ Session.vim
 tags
 
 ### Project template
+root-base-backend/apps/media/
 root-base-backend/media/
 
 .pytest_cache/
