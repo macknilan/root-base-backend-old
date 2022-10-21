@@ -1,50 +1,68 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  django: &django
-    build:
-      context: .
-      dockerfile: ./docker/local/django/Dockerfile
-    image: rbb_django
-    container_name: rbb_django
-    platform: linux/x86_64
-    depends_on:
-      - postgres
-      - mailhog
-    volumes:
-      - .:/app
-      - static_volumen:/app/staticfiles
-      - media_volumen:/app/mediafiles
-    env_file:
-      - ./.envs/.local/.django
-      - ./.envs/.local/.postgres
-    ports:
-      - "8000:8000"
-    networks:
-        - network_root_base_backend
-    command: /start
+    django: &django
+        build:
+            context: .
+            dockerfile: ./docker/local/django/Dockerfile
+        image: rbb_django
+        container_name: rbb_django
+        platform: linux/x86_64
+        depends_on:
+            - postgres
+            - mailhog
+        volumes:
+            - .:/app
+            - static_volume:/app/staticfiles
+            - media_volume:/app/apps/media
+        env_file:
+            - ./.envs/.local/.django
+            - ./.envs/.local/.postgres
+        expose:
+            - "8000"
+        # ports:
+        #     - "8000:8000"
+        networks:
+            - network_root_base_backend
+        command: /start
 
-  postgres:
-    build:
-      context: .
-      dockerfile: ./docker/local/postgres/Dockerfile
-    image: rbb_postgres
-    container_name: rbb_postgres
-    volumes:
-      - rbb_postgres_data:/var/lib/postgresql/data
-      - rbb_postgres_data_backups:/backups
-    env_file:
-      - ./.envs/.local/.postgres
-    networks:
-    - network_root_base_backend
+    postgres:
+        build:
+            context: .
+            dockerfile: ./docker/local/postgres/Dockerfile
+        image: rbb_postgres
+        container_name: rbb_postgres
+        volumes:
+            - rbb_postgres_data:/var/lib/postgresql/data
+            - rbb_postgres_data_backups:/backups
+        env_file:
+            - ./.envs/.local/.postgres
+        networks:
+            - network_root_base_backend
 
-  mailhog:
-    image: mailhog/mailhog:v1.0.0
-    container_name: rbb_mailhog
-    ports:
-      - "8025:8025"
-    networks:
-        - network_root_base_backend
+    mailhog:
+        image: mailhog/mailhog:v1.0.0
+        container_name: rbb_mailhog
+        ports:
+            - "8025:8025"
+        networks:
+            - network_root_base_backend
+
+    nginx:
+        restart: always
+        depends_on:
+            - django
+        container_name: rbb_nginx
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/apps/media
+        build:
+            context: ./docker/local/nginx
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        networks:
+            - network_root_base_backend
 
 networks:
     network_root_base_backend:
@@ -53,5 +71,5 @@ networks:
 volumes:
     rbb_postgres_data: {}
     rbb_postgres_data_backups: {}
-    static_volumen:
-    media_volumen:
+    static_volume:
+    media_volume:
