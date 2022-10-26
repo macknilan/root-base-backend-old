@@ -10,6 +10,7 @@ services:
         platform: linux/x86_64
         depends_on:
             - postgres
+            - redis
             - mailhog
         volumes:
             - .:/app
@@ -45,6 +46,35 @@ services:
         container_name: rbb_mailhog
         ports:
             - "8025:8025"
+        networks:
+            - network_root_base_backend
+
+    redis:
+        image: redis:latest
+        container_name: rbb_redis
+        networks:
+            - network_root_base_backend
+
+    celeryworker:
+        <<: *django
+        image: rbb_celery_worker
+        container_name: rbb_celery_worker
+        depends_on:
+            - redis
+            - postgres
+            - mailhog
+        ports: []
+        command: /start-celeryworker
+        networks:
+            - network_root_base_backend
+
+    flower:
+        <<: *django
+        image: rbb_flower
+        container_name: rbb_flower
+        ports:
+            - "5555:5555"
+        command: /start-flower
         networks:
             - network_root_base_backend
 
