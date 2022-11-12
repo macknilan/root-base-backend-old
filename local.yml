@@ -24,7 +24,8 @@ services:
         # ports:
         #     - "8000:8000"
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.2
         command: /start
 
     postgres:
@@ -39,7 +40,8 @@ services:
         env_file:
             - ./.envs/.local/.postgres
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.3
 
     mailhog:
         image: mailhog/mailhog:v1.0.0
@@ -47,13 +49,15 @@ services:
         ports:
             - "8025:8025"
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.4
 
     redis:
         image: redis:latest
         container_name: rbb_redis
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.5
 
     celeryworker:
         <<: *django
@@ -66,7 +70,8 @@ services:
         ports: []
         command: /start-celeryworker
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.6
 
     flower:
         <<: *django
@@ -76,7 +81,8 @@ services:
             - "5555:5555"
         command: /start-flower
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.7
 
     nginx:
         restart: always
@@ -92,11 +98,16 @@ services:
         ports:
             - "8080:80"
         networks:
-            - network_root_base_backend
+            network_root_base_backend:
+                ipv4_address: 172.18.0.8
 
 networks:
     network_root_base_backend:
         driver: bridge
+        ipam:
+            config:
+                - subnet: 172.18.0.0/24
+
 
 volumes:
     rbb_postgres_data: {}

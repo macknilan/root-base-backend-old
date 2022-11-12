@@ -20,32 +20,22 @@ from django.urls import path, include
 from django.views import defaults as default_views
 from django.views.generic.base import TemplateView
 from allauth.account.views import LoginView
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-from rest_framework import permissions
 
-
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Name API",
-        default_version="v1",
-        description="API endpoints for the api",
-        contact=openapi.Contact(email="nomackayu@gmail.com"),
-        license=openapi.License(name="MIT License"),
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
+from api.urls import urlpatterns as api_urls_v1
 
 urlpatterns = [
-    # Django Admin, use {% url 'admin:index' %}
     path("", LoginView.as_view(), name="home"),
-    path("redoc/",schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     path("users/", include("apps.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
-    # path(settings.ADMIN_URL, admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# API URLS
+urlpatterns += [
+    path('api/v1/', include(api_urls_v1)),
+]
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

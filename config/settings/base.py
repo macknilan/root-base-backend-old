@@ -5,6 +5,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import environ
 
@@ -87,11 +88,14 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_framework",
+    "rest_framework.authtoken",
     "django_filters",
     "django_countries",
     "phonenumber_field",
     "drf_yasg",
     "corsheaders",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
 
 LOCAL_APPS = [
@@ -152,9 +156,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -274,11 +278,9 @@ LOGGING = {
     "root": {"level": "INFO", "handlers": ["console"]},
 }
 
-# django-allauth
+# django-allauth https://django-allauth.readthedocs.io/en/latest/configuration.html
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
-
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
@@ -313,6 +315,7 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 # Celery
 # ------------------------------------------------------------------------------
+
 if USE_TZ:
     # https://docs.celeryq.dev/en/stable/userguide/configuration.html#std:setting-timezone
     CELERY_TIMEZONE = TIME_ZONE
@@ -334,4 +337,34 @@ CELERY_TASK_TIME_LIMIT = 5 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 60
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#beat-scheduler
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+
+# django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
+# -------------------------------------------------------------------------------
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": (
+        # "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        # "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication"
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+
+}
+
+# dj-rest-auth. - https://dj-rest-auth.readthedocs.io/en/latest/index.html
+# -------------------------------------------------------------------------------
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = "jwt-auth-token"
+JWT_AUTH_REFRESH_COOKIE = "jwt-refresh-token"
+ACCOUNT_LOGOUT_ON_GET = False
+
 

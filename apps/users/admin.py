@@ -58,7 +58,7 @@ class UserProfile(admin.ModelAdmin):
         (
             "Profile",
             {
-                "fields": (("user", "picture"),),
+                "fields": (("user", "biography", "picture"),),
             },
         ),
         (

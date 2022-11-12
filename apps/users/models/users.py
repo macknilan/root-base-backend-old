@@ -25,8 +25,9 @@ class User(TimeStampedModel, AbstractUser):
 
     email = models.EmailField(
         _("email address"),
-        unique=True,
         db_index=True,
+        max_length=255,
+        unique=True,
         error_messages={"unique": _("A user with that email already exists.")},
     )
 
