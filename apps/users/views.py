@@ -45,15 +45,9 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_form(self, *args, **kwargs):
         form = super(UserUpdateView, self).get_form(*args, **kwargs)
-        form.fields["first_name"].widget.attrs.update(
-            {"placeholder": "first name", "maxlength": 80, "required": True}
-        )
-        form.fields["last_name"].widget.attrs.update(
-            {"placeholder": "last name", "maxlength": 80}
-        )
-        form.fields["phone_number"].widget.attrs.update(
-            {"placeholder": "+00 (000) 000-000", "maxlength": 80}
-        )
+        form.fields["first_name"].widget.attrs.update({"placeholder": "first name", "maxlength": 80, "required": True})
+        form.fields["last_name"].widget.attrs.update({"placeholder": "last name", "maxlength": 80})
+        form.fields["phone_number"].widget.attrs.update({"placeholder": "+00 (000) 000-000", "maxlength": 80})
         # form.fields["email"].widget.attrs.update(
         #     {"disabled": True, "require": False, "readonly": True, "maxlength": 80}
         # )
@@ -61,9 +55,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return form
 
     def get_success_url(self):
-        assert (
-            self.request.user.is_authenticated
-        )  # for mypy to know that the user is authenticated
+        assert self.request.user.is_authenticated  # for mypy to know that the user is authenticated
         return self.request.user.get_absolute_url()
 
     def get_object(self):
