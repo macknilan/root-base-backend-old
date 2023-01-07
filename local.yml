@@ -6,6 +6,7 @@ services:
             context: .
             dockerfile: ./docker/local/django/Dockerfile
         image: rbb_django
+        restart: unless-stopped
         container_name: rbb_django
         platform: linux/x86_64
         depends_on:
@@ -33,6 +34,7 @@ services:
             context: .
             dockerfile: ./docker/local/postgres/Dockerfile
         image: rbb_postgres
+        restart: unless-stopped
         container_name: rbb_postgres
         volumes:
             - rbb_postgres_data:/var/lib/postgresql/data

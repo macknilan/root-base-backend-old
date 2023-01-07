@@ -68,7 +68,6 @@ class User(TimeStampedModel, AbstractUser):
         verbose_name = _("user")
         verbose_name_plural = _("users")
 
-
     def get_absolute_url(self):
         """Get url for user's detail view.
 
